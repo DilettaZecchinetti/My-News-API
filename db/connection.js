@@ -1,12 +1,16 @@
-const { Pool } = require('pg');
-const ENV = process.env.NODE_ENV || 'development';
+const { Pool } = require("pg");
 
-require('dotenv').config({
-  path: `${__dirname}/../.env.${ENV}`,
-});
+const ENV = process.env.NODE_ENV || "development";
 
-if (!process.env.PGDATABASE) {
-  throw new Error('PGDATABASE not set');
-}
+const config =
+  ENV === "test"
+    ? {
+        database: "nc_news_test",
+      }
+    : {
+        database: "nc_news",
+      };
 
-module.exports = new Pool();
+const db = new Pool(config);
+
+module.exports = db;

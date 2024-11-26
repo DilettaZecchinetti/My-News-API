@@ -8,9 +8,11 @@ const {
   getArticleById,
 } = require("./db/controllers/articlesbyid.controller.js");
 
+
 app.get("/api", getEndpoints);
 
 app.get("/api/topics", getTopics);
+
 
 app.get("/api/articles/:article_id", getArticleById);
 
@@ -22,6 +24,5 @@ app.use((err, req, res, next) => {
   const { status = 500, msg = "Internal Server Error" } = err;
 
   res.status(status).send({ msg });
-});
 
 module.exports = app;

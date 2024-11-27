@@ -83,13 +83,37 @@ describe("GET /api/articles/:article_id", () => {
         expect(body.msg).toBe("Id not found");
       });
   });
+});
 
-  test("400: responds with error as it has been given wrong id", () => {
+//task 5
+
+describe("GET /api/articles", () => {
+  test("200: Responds with an array of all articles with the correct properties", () => {
     return request(app)
-      .get("/api/articles/NaN")
-      .expect(400)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body: { articles } }) => {
+        expect(articles).toHaveLength(13);
+        articles.forEach((article) => {
+          expect(article).toMatchObject({
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            article_img_url: expect.any(String),
+            comment_count: expect.any(Number),
+          });
+        });
+      });
+  });
+
+  test("404: responds with error as articles do not exist", () => {
+    return request(app)
+      .get("/api/kiwi")
+      .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("bad request");
+        expect(body.msg).toBe("Endpoint not found");
       });
   });
 });

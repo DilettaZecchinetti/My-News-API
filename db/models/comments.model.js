@@ -1,7 +1,6 @@
 const db = require("../connection");
 
 const fetchCommentsByArticleId = (article_id) => {
-  console.log("hi from model");
   const queryStr = `SELECT comment_id, body, article_id, author, votes, created_at 
        FROM comments 
        WHERE article_id= $1 

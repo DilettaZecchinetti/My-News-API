@@ -5,7 +5,6 @@ const {
 
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
-  console.log(article_id);
 
   fetchArticleById(article_id)
     .then((article) => {

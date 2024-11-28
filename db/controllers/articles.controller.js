@@ -5,6 +5,7 @@ const {
 
 exports.getArticleById = (req, res, next) => {
   const { article_id } = req.params;
+  console.log(article_id);
 
   fetchArticleById(article_id)
     .then((article) => {
@@ -16,8 +17,6 @@ exports.getArticleById = (req, res, next) => {
 };
 
 exports.getAllArticles = (req, res, next) => {
-  console.log("hi from controller");
-
   fetchAllArticles()
     .then((articles) => {
       res.status(200).send({ articles });

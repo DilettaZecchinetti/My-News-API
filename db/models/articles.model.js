@@ -14,7 +14,6 @@ const fetchArticleById = (article_id) => {
 exports.fetchArticleById = fetchArticleById;
 
 exports.fetchAllArticles = () => {
-  console.log("hi from model");
   return db
     .query(
       `SELECT articles.title, articles.topic, articles.author, articles.created_at, articles.votes, articles.article_img_url,

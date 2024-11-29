@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 const { getEndpoints } = require("./db/controllers/api.controller.js");
 const { getTopics } = require("./db/controllers/topics.controller.js");
@@ -10,6 +11,7 @@ const {
 
 const {
   getCommentsByArticleId,
+  postCommentToArticleId,
 } = require("./db/controllers/comments.controller.js");
 
 app.get("/api", getEndpoints);
@@ -22,17 +24,15 @@ app.get("/api/articles", getAllArticles);
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 
+app.post("/api/articles/:article_id/comments", postCommentToArticleId);
+
 app.use("/*", (req, res) => {
   res.status(404).send({ msg: "Route not found" });
 });
 
 app.use((err, req, res, next) => {
-  if (err.status && err.msg) {
-    res.status(err.status).send({ msg: err.msg });
-  } else {
-    console.error(err);
-    res.status(500).send({ msg: "server error!" });
-  }
+  console.error(err);
+  res.status(500).send({ msg: "Internal Server Error" });
 });
 
 module.exports = app;

@@ -10,5 +10,21 @@ const fetchCommentsByArticleId = (article_id) => {
     return rows;
   });
 };
+////
+exports.addComment = (article_id, newComment) => {
+  const { username, body } = newComment;
+
+  const query = `
+    INSERT INTO comments (article_id, author, body)
+    VALUES ($1, $2, $3)
+    RETURNING comment_id, article_id, author, body, votes, created_at;
+  `;
+
+  const values = [article_id, username, body];
+
+  return db.query(query, values).then((result) => {
+    return result.rows[0];
+  });
+};
 
 exports.fetchCommentsByArticleId = fetchCommentsByArticleId;
